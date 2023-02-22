@@ -114,6 +114,7 @@ import { handleErrorWithDialog } from 'src/errorHandling';
 import { getErrorMessage } from 'src/utils';
 import { ActionGroup, UIGroupedFields } from 'src/utils/types';
 import {
+  getDocFromNameIfExistsElseNew,
   getFieldsGroupedByTabAndSection,
   getGroupedActionsForDoc,
 } from 'src/utils/ui';
@@ -266,18 +267,10 @@ export default defineComponent({
         return;
       }
 
-      if (this.name) {
-        await this.setDocFromName(this.name);
-      } else {
-        this.docOrNull = this.fyo.doc.getNewDoc(this.schemaName);
-      }
-    },
-    async setDocFromName(name: string) {
-      try {
-        this.docOrNull = await this.fyo.doc.getDoc(this.schemaName, name);
-      } catch (err) {
-        this.docOrNull = this.fyo.doc.getNewDoc(this.schemaName);
-      }
+      this.docOrNull = await getDocFromNameIfExistsElseNew(
+        this.schemaName,
+        this.name
+      );
     },
     async toggleQuickEditDoc(doc: Doc | null) {
       if (this.quickEditDoc && doc) {
