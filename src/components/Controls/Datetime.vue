@@ -24,7 +24,7 @@
         <button
           v-if="!isReadOnly"
           class="p-0.5 rounded -me-1 ms-1"
-          :class="showMandatory ? 'bg-red-300' : 'bg-gray-300'"
+          :class="showMandatory ? 'bg-red-200' : 'bg-gray-200'"
           @click="togglePopover"
         >
           <FeatherIcon
